@@ -22,6 +22,12 @@ public class SongService {
     return this.songs;
   }
 
+  public Song findSongsById(int id){
+   Song songFound;
+     songFound = songs.stream().filter(p -> p.getId() == id).findFirst().orElse(null);
+    return songFound;
+  }
+
   public List<Song> listaEjemplos(){
 List<Song> songs = new ArrayList<>();
 
