@@ -1,6 +1,7 @@
 package com.techlab.techLabAPI.service;
 
 import com.techlab.techLabAPI.model.Song;
+import com.techlab.techLabAPI.repository.SongRepository;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.ListableBeanFactory;
@@ -9,33 +10,37 @@ import org.springframework.stereotype.Service;
 @Service
 public class SongService {
 
-  private final List<Song> songs = listaEjemplos();
 
-
-  public Song createSong(Song song) {
-    song.addId();
-    songs.add(song);
-    return song;
+  private SongRepository repository;
+  public SongService(SongRepository repository){
+    this.repository = repository;
   }
 
-  public List<Song> showSongs(){
-    return this.songs;
+  public Song createSong(Song song) {
+
+    return repository.saveSong(song);
+  }
+
+  public List<Song> showSongs(String title, Integer duration){
+
+    if (!title.isEmpty() && duration > 0){
+      return this.repository.findByTitleAndDuration(title,duration);}
+
+    if(!title.isEmpty()){
+      return this.repository.findByTitle(title);}
+
+    if (duration > 0){
+      return this.repository.findByDuration(duration);
+    }
+
+    return this.repository.songsDB();
   }
 
   public Song findSongsById(int id){
    Song songFound;
-     songFound = songs.stream().filter(p -> p.getId() == id).findFirst().orElse(null);
+     songFound = this.repository.songsDB().stream().filter(p -> p.getId() == id).findFirst().orElse(null);
     return songFound;
   }
 
-  public List<Song> listaEjemplos(){
-List<Song> songs = new ArrayList<>();
 
-songs.add(new Song("black swan",200,"tema sobre la oscuridad interna"));
-songs.add(new Song("nothing else matters",240,"tema de amor"));
-songs.add(new Song("nicaragua",260,"dictaduras y guerras civiles"));
-songs.add(new Song("gasolina",140,"reggaeton clásico de principios de los años 2000"));
-
-return songs;
   }
-}

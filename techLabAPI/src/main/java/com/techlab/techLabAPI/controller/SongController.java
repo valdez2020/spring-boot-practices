@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -23,18 +24,23 @@ public SongController(SongService songService){
   this.songService = songService;
 }
 
+
   @PostMapping("/songs")
   public Song createSong(@RequestBody Song song){
   return this.songService.createSong(song);
   }
 
   @GetMapping("/songs")
-  public List<Song> showSongs(){
-    return this.songService.showSongs();
+  public List<Song> showSongs(
+      @RequestParam(required = false, defaultValue = "") String title,
+      @RequestParam(required = false, defaultValue = "0") Integer duration
+  ){
+    return this.songService.showSongs(title, duration);
   }
 
 @GetMapping("/songs/{id}")
   public Song findSongsById(@PathVariable int id){
   return this.songService.findSongsById(id);
+
 };
 }
