@@ -52,7 +52,15 @@ public List<Song> findByDuration(Integer duration){
   return foundSongs;
   }
 
+public List<Song> deleteById(int id){
+    for(Song song : songsDB) {
+      if (id == song.getId()) {  songsDB.remove(song);
+      return songsDB;}
+    }
 
+  System.out.println("Se ha eliminado la canción correctamente");
+  return songsDB;
+}
 
   public List<Song> listaEjemplos() {
     List<Song> songs = new ArrayList<>();

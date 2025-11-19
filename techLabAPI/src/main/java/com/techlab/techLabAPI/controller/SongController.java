@@ -4,6 +4,7 @@ import com.techlab.techLabAPI.model.Song;
 import com.techlab.techLabAPI.service.SongService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,5 +43,12 @@ public SongController(SongService songService){
   public Song findSongsById(@PathVariable int id){
   return this.songService.findSongsById(id);
 
-};
+}
+
+
+
+@DeleteMapping("/songs/{id}")
+  public List<Song> deleteSongById(@PathVariable int id){
+  return this.songService.deleteById(id);
+}
 }

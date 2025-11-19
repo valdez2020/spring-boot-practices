@@ -43,4 +43,12 @@ public class SongService {
   }
 
 
+  public List<Song> deleteById(int id){
+    if(findSongsById(id) != null){
+      return this.repository.deleteById(id);
+    }
+    System.out.println("La canción con ID :" + "no existe en la lista.");
+    return this.repository.songsDB();
+  }
+
   }
